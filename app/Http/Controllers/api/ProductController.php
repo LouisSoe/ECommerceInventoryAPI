@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $response = Product::with('category')->get();
+        $response = Product::with(['category', 'activePromotion'])->get();
         if($response->isNotEmpty()) {
             return response()->json([
                 'status' => 'success',
@@ -30,10 +30,10 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'category_id' => 'required',
-            'price' => 'required',
-            'stock_quantity' => 'required',
+            'name' => 'required|string|max:100',
+            'category_id' => 'required|exists:tb_category,id',
+            'price' => 'required|numeric|min:0',
+            'stock_quantity' => 'required|integer|min:0',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -58,7 +58,7 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $response = Product::with('category')->findOrFail($id);
+        $response = Product::with(['category', 'activePromotion'])->findOrFail($id);
         if($response) {
             return response()->json([
                 'status' => 'success',
@@ -77,10 +77,10 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'category_id' => 'required',
-            'price' => 'required',
-            'stock_quantity' => 'required',
+            'name' => 'required|string|max:100',
+            'category_id' => 'required|exists:tb_category,id',
+            'price' => 'required|numeric|min:0',
+            'stock_quantity' => 'required|integer|min:0',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -122,7 +122,7 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        $query = Product::with('category');
+        $query = Product::with(['category', 'activePromotion']);
 
         if ($request->filled('name')) {
             $query->where('name', 'like', '%' . $request->input('name') . '%');
