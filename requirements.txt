@@ -1,0 +1,18 @@
+System Requirements:
+- PHP >= 8.2
+- Composer
+- Database Server (MySQL)
+
+Application Dependencies:
+- laravel/framework
+- tymon/jwt-auth
+- laravel/tinker
+
+Development Dependencies:
+- fakerphp/faker
+- laravel/pint
+- laravel/sail
+- mockery/mockery
+- nunomaduro/collision
+- phpunit/phpunit
+- spatie/laravel-ignition

@@ -1,66 +1,63 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# E-Commerce Inventory API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API Manajemen Inventaris E-Commerce modern yang dibangun dengan Laravel 11. API ini dilengkapi dengan fitur autentikasi berbasis JWT, dan *endpoint* manajemen inventaris yang dinamis.
 
-## About Laravel
+## Persyaratan (Requirements)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Silakan merujuk ke [requirements.txt](requirements.txt) untuk melihat daftar lengkap persyaratan sistem dan dependensi aplikasi.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Cara Menjalankan Aplikasi
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Ikuti langkah-langkah berikut untuk mengatur dan menjalankan aplikasi di komputer lokal Anda:
 
-## Learning Laravel
+1. **Instal Dependensi**
+   Buka terminal di direktori proyek dan instal paket PHP yang diperlukan:
+   ```bash
+   composer install
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. **Konfigurasi Environment**
+   Salin file *environment* contoh dan perbarui konfigurasi database Anda:
+   ```bash
+   cp .env.example .env
+   ```
+   *Pastikan untuk mengatur `DB_CONNECTION`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, dan `DB_PASSWORD` di dalam file `.env` agar sesuai dengan server lokal Anda.*
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. **Buat Key Aplikasi**
+   Buat *key* aplikasi dan *secret key* untuk JWT:
+   ```bash
+   php artisan key:generate
+   php artisan jwt:secret
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. **Migrasi & Seeding Database**
+   Jalankan migrasi untuk membuat tabel database dan mengisinya dengan data awal (misalnya: data pengguna admin dan role default):
+   ```bash
+   php artisan migrate --seed
+   ```
 
-## Laravel Sponsors
+5. **Jalankan Server Lokal**
+   Jalankan server *development* Laravel:
+   ```bash
+   php artisan serve
+   ```
+   API sekarang dapat diakses melalui `http://localhost:8000`.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Penggunaan API & Pengujian
 
-### Premium Partners
+API ini menggunakan **JSON Web Tokens (JWT)** untuk autentikasi. Untuk mengakses *endpoint* yang dilindungi (*protected endpoints*), Anda harus melakukan autentikasi terlebih dahulu melalui *route login* untuk mendapatkan token, kemudian menyertakan token tersebut di dalam *header* permintaan HTTP Anda:
+`Authorization: Bearer <token_jwt_anda>`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Koleksi Postman
 
-## Contributing
+Untuk mempermudah proses pengujian, sebuah koleksi Postman yang telah dikonfigurasi sepenuhnya telah disertakan di dalam repositori ini. Koleksi ini berisi semua *route* API, *body* permintaan, dan *header* yang diperlukan untuk berinteraksi dengan sistem.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **File Koleksi:** [`postman/E-Commerce API.postman_collection.json`](postman/E-Commerce%20API.postman_collection.json)
 
-## Code of Conduct
+Impor file ini ke dalam *workspace* Postman Anda untuk mulai mengirim permintaan ke server lokal dengan cepat.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Video Dokumentasi
 
-## Security Vulnerabilities
+Untuk panduan lengkap mengenai aplikasi, fitur-fitur yang tersedia, dan cara penggunaan API, silakan tonton video dokumentasi di bawah ini:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+🎥 [**Tonton Video Dokumentasi Di Sini**](https://drive.google.com/file/d/1fP-e5kHBTvDrZ7pAdx60aQ3KaMfB3KiE/view?usp=sharing)
