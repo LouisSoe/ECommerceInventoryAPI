@@ -58,7 +58,7 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $response = Product::with(['category', 'activePromotion'])->findOrFail($id);
+        $response = Product::with(['category', 'activePromotion'])->find($id);
         if($response) {
             return response()->json([
                 'status' => 'success',
